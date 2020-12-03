@@ -1,0 +1,50 @@
+.issue {
+  border: 1px solid #e1e4e8;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.text:hover, .issueCreator:hover {
+  color: dodgerblue;
+  cursor: pointer;
+}
+
+.tags {
+  border: 1px solid transparent;
+  border-radius: 2em;
+  padding: 6px;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.tags:hover {
+  cursor: pointer;
+}
+
+.issue:hover {
+  background-color: #f6f8fa;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2px 0;
+  padding: 2px 10px;
+}
+
+.topLeft {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topLeft > * {
+  padding: 5px;
+}
+
+.bottom {
+  padding: 2px 10px;
+  font-size: 0.8rem;
+  margin-left: 20px;
+}
