@@ -52,7 +52,9 @@ function RenderIssues() {
   let totalIssues, issuesPerPage, maxPages, pageNumbers=null, indexOfFirstIssue, indexOfLastIssue;
   if(issueList !== null){
     // setting pagination
-    totalIssues = issueList.length;
+    if (filter === "showAll") totalIssues = issueList.length;
+    else if(filter === "isOpen") totalIssues = issueList.filter(issue => issue.isOpen === true).length;
+    else totalIssues = issueList.filter(issue => issue.isOpen === false).length;
     issuesPerPage = 8;
     maxPages = (totalIssues + issuesPerPage - 1) / issuesPerPage;
     pageNumbers = []; for (let i = 1; i <= maxPages; i++) pageNumbers.push(i);
@@ -84,7 +86,7 @@ function RenderIssues() {
                 <input type="text" value={newIssueText} onChange={handleNewIssueText}></input>
                 <legend>Type Your Name</legend>
                 <input type="text" value={newIssueCreator} onChange={handleNewIssueCreator}></input>
-                <legend>Choose Tag</legend>
+                {/* <legend>Choose Tag</legend> */}
                 <button className="formBtn">Submit</button>
               </form>
             </div>
@@ -95,7 +97,7 @@ function RenderIssues() {
             <div className="issuesHeader">
               <div className="filter">
                 <select value={filter} onChange={handleChange} className="btn">
-                  <option value="showAll">Show All</option>
+                  <option value="showAll">Show All </option>
                   <option value="isOpen">isOpen</option>
                   <option value="isClosed">isClosed</option>
                 </select>

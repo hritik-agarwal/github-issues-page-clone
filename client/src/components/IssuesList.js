@@ -15,6 +15,7 @@ function IssuesList({issueslist}) {
         {issues.map(issue => {
           return (
             <Issue
+              _id={issue._id}
               key={issue._id}
               text={issue.text}
               isOpen={issue.isOpen}

@@ -1,9 +1,18 @@
 import React from 'react';
 import { GitPullRequestIcon, IssueOpenedIcon, CommentIcon } from '@primer/octicons-react'
 import "./Issue.css";
+import axios from 'axios';
 
 function Issue(props) {
-  const {text, isOpen, issueNumber, dateOpened, issueCreator, tags} = props;
+  const {_id, text, isOpen, issueNumber, dateOpened, issueCreator, tags} = props;
+  const handleDelete = () => {
+    axios.delete(`/api/issues/delete-issue/${_id}`).then(res => console.log(res.data));
+    window.location.href = "/";
+  }
+  const handleState = () => {
+    axios.patch(`/api/issues/update-issue/${_id}`, {isOpen: !isOpen});
+    window.location.href = "/";
+  }
   return (
     <div className="issue">
       <div className="top">
@@ -16,7 +25,11 @@ function Issue(props) {
             );
           })} */}
         </div>
-        <CommentIcon size={24} className="topRight"/>
+        <div className="topRight">
+          <button className="btn remove-btn" onClick={handleDelete}>Delete</button>
+          <button className="btn state-btn" onClick={handleState}>{isOpen ? "Close Issue" : "Open Issue"}</button>
+        </div>
+        
       </div>
       <div className="bottom">
         #{issueNumber} opened on {dateOpened} by <span className="issueCreator">{issueCreator}</span>
