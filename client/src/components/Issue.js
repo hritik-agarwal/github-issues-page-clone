@@ -1,5 +1,5 @@
 import React from 'react';
-import { GitPullRequestIcon, IssueOpenedIcon, CommentIcon } from '@primer/octicons-react'
+import { IssueOpenedIcon, IssueClosedIcon } from '@primer/octicons-react'
 import "./Issue.css";
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ function Issue(props) {
     <div className="issue">
       <div className="top">
         <div className="topLeft">
-          {isOpen ? <IssueOpenedIcon size={24} /> : <GitPullRequestIcon size={24} />}
+          {isOpen ? <IssueOpenedIcon size={24} /> : <IssueClosedIcon size={24} />}
           <span className="text">{text}</span>
           {tags.map((tag,id) => {
             return (
@@ -27,7 +27,7 @@ function Issue(props) {
         </div>
         <div className="topRight">
           <button className="btn remove-btn" onClick={handleDelete}>Delete</button>
-          <button className="btn state-btn" onClick={handleState}>{isOpen ? "Close Issue" : "Open Issue"}</button>
+          <button className="btn state-btn" onClick={handleState}>{isOpen ? "Close Issue" : "Reopen Issue"}</button>
         </div>
         
       </div>
