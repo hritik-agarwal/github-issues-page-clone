@@ -16,7 +16,7 @@ app.use(bodyPraser.json());
 app.use(bodyPraser.urlencoded({ extended: true }));
 
 // Database Connection
-const db = process.env.mongoURI;
+const db = require("./config/keys").mongoURI;
 mongoose.connect(db,{useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => console.log("Connected to MongoDB Atlas"))
 .catch(err => console.log(err));
