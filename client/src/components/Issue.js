@@ -19,11 +19,11 @@ function Issue(props) {
         <div className="topLeft">
           {isOpen ? <IssueOpenedIcon size={24} /> : <GitPullRequestIcon size={24} />}
           <span className="text">{text}</span>
-          {/* {JSON.parse(tag).map(tag => {
+          {tags.map((tag,id) => {
             return (
-              <span key={tag.tagName} className="tags" style={{ "backgroundColor": tag.color }}>{tag.tagName}</span>
+              <span key={id} className="tags" style={{"backgroundColor": tag.color}}>{tag.tagName}</span>
             );
-          })} */}
+          })}
         </div>
         <div className="topRight">
           <button className="btn remove-btn" onClick={handleDelete}>Delete</button>

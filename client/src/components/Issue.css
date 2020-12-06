@@ -9,18 +9,6 @@
   cursor: pointer;
 }
 
-.tags {
-  border: 1px solid transparent;
-  border-radius: 2em;
-  padding: 6px;
-  font-size: 12px;
-  margin-left: 5px;
-}
-
-.tags:hover {
-  cursor: pointer;
-}
-
 .issue:hover {
   background-color: #f6f8fa;
 }
@@ -40,11 +28,24 @@
 }
 
 .topLeft > * {
-  padding: 5px;
+  padding: 2px;
+}
+
+.tags {
+  border: 1px solid transparent;
+  border-radius: 2em;
+  padding: 6px;
+  font-size: 12px;
+  margin-left: 5px;
+  color: white;
+}
+
+.tags:hover {
+  cursor: pointer;
 }
 
 .bottom {
-  padding: 2px 10px;
+  padding: 0px 10px;
   font-size: 0.8rem;
   margin-left: 20px;
 }
@@ -56,13 +57,16 @@
 .remove-btn { 
   background-color: red;
   color: white;
+  margin: 2px;
 }
 
 .state-btn {
   background-color: blue;
   color: white;
+  margin: 2px;
 }
 
 .btn:focus {
   outline: none;
 }
+
