@@ -11,7 +11,7 @@ import IssuesList from './IssuesList';
 function RenderIssues() {
 
   // State Varaibales
-  const [issueList, setIssueList] = useState([{}]);
+  const [issueList, setIssueList] = useState(null);
   const [filter, setFilter] = useState("showAll");
   const [currentPage, setCurrentPage] = useState(1);
   const [newIssueText, setNewIssueText] = useState('');
@@ -31,7 +31,12 @@ function RenderIssues() {
       isOpen: true,
       tags: []
     }
-    axios.post('/add-issue', newIssue);
+    axios.post('/api/issues/add-issue', newIssue)
+    .then(() => {
+      alert("Issue added :)");
+      window.location.reload();
+    })
+    .catch(() => alert("Could not add new issue"));
     setNewIssueText('');
     setNewIssueCreator('');
     window.location.href = "/";
@@ -39,18 +44,23 @@ function RenderIssues() {
 
   // to be run at start to fetch all issues
   useEffect(() => {
-    axios.get('/list-issues').then(res => { setIssueList(res.data)}).catch(err => console.log(err));
+    axios.get('/api/issues/list-issues')
+    .then(res => { setIssueList(res.data)})
+    .catch(err => console.log(err));
   },[])
 
-  // setting pagination
-  const totalIssues = issueList.length;
-  const issuesPerPage = 8;
-  const maxPages = (totalIssues + issuesPerPage - 1) / issuesPerPage;
-  const pageNumbers = []; for(let i=1; i<=maxPages; i++) pageNumbers.push(i);
+  let totalIssues, issuesPerPage, maxPages, pageNumbers=null, indexOfFirstIssue, indexOfLastIssue;
+  if(issueList !== null){
+    // setting pagination
+    totalIssues = issueList.length;
+    issuesPerPage = 8;
+    maxPages = (totalIssues + issuesPerPage - 1) / issuesPerPage;
+    pageNumbers = []; for (let i = 1; i <= maxPages; i++) pageNumbers.push(i);
 
-  // First and Last Issue on each page
-  const indexOfLastIssue = currentPage * issuesPerPage;
-  const indexOfFirstIssue = indexOfLastIssue - issuesPerPage;
+    // First and Last Issue on each page
+    indexOfLastIssue = currentPage * issuesPerPage;
+    indexOfFirstIssue = indexOfLastIssue - issuesPerPage;
+  }
 
   return (
 
@@ -92,19 +102,25 @@ function RenderIssues() {
               </div>
             </div>
 
-            <IssuesList issueslist={issueList.filter(issue => {
-              if (filter === "showAll") return issue;
-              if (filter === "isOpen" && issue.isOpen === true) return issue;
-              if (filter === "isClosed" && issue.isOpen === false) return issue;
-            }).slice(indexOfFirstIssue, indexOfLastIssue)} />
+            {issueList === null ? <div className="issuesHeader">Loading ...</div> : (
+              issueList.length === 0 ? <p>No Issue Available</p> : (
+                <IssuesList issueslist={issueList.filter(issue => {
+                  if (filter === "showAll") return issue;
+                  if (filter === "isOpen" && issue.isOpen === true) return issue;
+                  if (filter === "isClosed" && issue.isOpen === false) return issue;
+                }).slice(indexOfFirstIssue, indexOfLastIssue)} />
+              )
+            )}
 
             <div className="pagination">
               <ul>
-                {pageNumbers.map(number => {
-                  return (
-                    <li key={number} className={number === currentPage ? "active" : ""} onClick={handlePageChange}>{number}</li>
-                  );
-                })}
+                {pageNumbers === null ? '' : (
+                  pageNumbers.map(number => {
+                    return (
+                      <li key={number} className={number === currentPage ? "active" : ""} onClick={handlePageChange}>{number}</li>
+                    );
+                  })
+                )}
               </ul>
             </div>
 
